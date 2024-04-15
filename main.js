@@ -10,7 +10,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   10000
 );
-camera.position.set(0,60,50)
+camera.position.set(0,300,50)
 
 // scene
 const scene = new THREE.Scene();
@@ -22,16 +22,16 @@ document.body.appendChild(renderer.domElement);
 
 var controls = new OrbitControls(camera, renderer.domElement)
 
-var geometry = new THREE.PlaneGeometry(1000, 1000, 125, 125);
-var material = new THREE.MeshLambertMaterial({wireframe: false});
+var geometry = new THREE.PlaneGeometry(10000, 10000, 512, 512);
+var material = new THREE.MeshLambertMaterial({color:0x555555});
 var terrain = new THREE.Mesh(geometry, material);
 terrain.rotateX(-Math.PI/2)
 scene.add(terrain)
 
 const perlin = new Perlin()
 
-const smoothing = 300;
-var peak = 60;
+const smoothing = 2000;
+var peak = 400;
 var vertices = terrain.geometry.attributes.position.array
 for(var i=0;i<=vertices.length; i+=3)
 {
@@ -53,5 +53,6 @@ scene.add(directionLight)
 function animate() {
   renderer.render(scene, camera);
   requestAnimationFrame(animate);
+  camera.position.z += 1
 }
 animate();
